@@ -1,29 +1,28 @@
 {
-  "name": "test-angular-monorepo",
-  "$schema": "node_modules/nx/schemas/project-schema.json",
-  "includedScripts": [],
+  "name": "app",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "./src",
+  "sourceRoot": "app/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/test-angular-monorepo",
-        "index": "./src/index.html",
-        "browser": "./src/main.ts",
+        "outputPath": "dist/app",
+        "index": "app/src/index.html",
+        "browser": "app/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "tsconfig.app.json",
+        "tsConfig": "app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "public"
+            "input": "app/public"
           }
         ],
-        "styles": ["./src/styles.scss"],
+        "styles": ["app/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -54,10 +53,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "test-angular-monorepo:build:production"
+          "buildTarget": "app:build:production"
         },
         "development": {
-          "buildTarget": "test-angular-monorepo:build:development"
+          "buildTarget": "app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -65,28 +64,25 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "test-angular-monorepo:build"
+        "buildTarget": "app:build"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["./src"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectName}"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "jest.config.app.ts"
+        "jestConfig": "app/jest.config.ts"
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "test-angular-monorepo:build",
+        "buildTarget": "app:build",
         "port": 4200,
-        "staticFilePath": "dist/test-angular-monorepo/browser",
+        "staticFilePath": "dist/app/browser",
         "spa": true
       }
     }
